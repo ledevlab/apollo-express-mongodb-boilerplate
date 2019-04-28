@@ -16,9 +16,8 @@ async function getMe(req) {
       );
     }
   }
-};
+}
 
-
-module.export = {
+module.exports = {
   getMe
 };
