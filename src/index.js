@@ -14,7 +14,7 @@ const schema = require('./schema');
 const resolvers = require('./resolvers');
 const loaders = require('./loaders');
 
-const { models, connectDb } = require('./models');
+const { models, connectDb, ObjectId } = require('./models');
 const { getMe } = require('./middlewares/authorization');
 
 const app = express();
@@ -75,8 +75,27 @@ server.installSubscriptionHandlers(httpServer);
 
 connectDb(`${config.mongo.uri}/${config.mongo.dbName}`)
   .then(async () => {
+    createUsersWithMessages();
+
     const { port } = config.app;
     httpServer.listen({ port }, () => {
       console.log(`Apollo Server on http://localhost:${port}/graphql`);
     });
 });
+
+const createUsersWithMessages = async date => {
+  await models.User.create({
+    _id: new ObjectId(1),
+    username: 'rwieruch',
+    email: 'hello@robin.com',
+    password: 'rwieruch',
+    role: 'ADMIN'
+  });
+
+  await models.User.create({
+    _id: new ObjectId(2),
+    username: 'ddavids',
+    email: 'hello@david.com',
+    password: 'ddavids'
+  });
+};

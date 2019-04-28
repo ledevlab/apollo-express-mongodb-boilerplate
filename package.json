@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "nodemon src/index.js",
-    "test:run-server": "TEST_DATABASE=james-test npm start",
+    "test:run-server": "npm start",
     "test:execute-test": "mocha src/**/*.spec.js",
     "test": "echo \"No test specified\" && exit 0"
   },

@@ -14,5 +14,6 @@ const models = {
 
 module.exports = {
   models,
-  connectDb
+  connectDb,
+  ObjectId: mongoose.mongo.ObjectId,
 };

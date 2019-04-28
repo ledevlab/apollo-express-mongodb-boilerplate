@@ -11,22 +11,19 @@ const createToken = async (user, secret, expiresIn) => {
   });
 };
 
-// Queries
-
 const find = async (parent, args, { models }) => {
-  return await models.User.findAll();
+  return await models.User.find({});
 };
 
 const findOne = async (parent, { id }, { models }) => {
-  return await models.User.findByPk(id);
+  return await models.User.findById(id);
 }
 
 const me = async (parent, args, { models, me }) => {
   if (!me) {
     return null;
   }
-
-  return await models.User.findByPk(me.id);
+  return await models.User.findById(me.id);
 };
 
 // Mutations
@@ -68,22 +65,12 @@ const signIn = async (
 };
 
 const findOneAndUpdate = async (parent, { username }, { models, me }) => {
-  const user = await models.User.findByPk(me.id);
+  const user = await models.User.findById(me.id);
   return await user.update({ username });
 };
 
 const findOneAndDelete = async (parent, { id }, { models }) => {
-  return await models.User.destroy({
-    where: { id },
-  });
-};
-
-const listUserMessages = async (user, args, { models }) => {
-  return await models.Message.findAll({
-    where: {
-      userId: user.id,
-    },
-  })
+  return await models.User.remove({ _id: id });
 };
 
 module.exports = {
@@ -104,9 +91,5 @@ module.exports = {
       isAdmin,
       findOneAndDelete
     ),
-  },
-
-  User: {
-    messages: listUserMessages
   },
 };
