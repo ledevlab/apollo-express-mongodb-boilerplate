@@ -1,5 +1,8 @@
+#!/usr/bin/env node
+require('dotenv').load({ silent: true });
+const logger = require('debug')('http');
+
 const cors = require('cors');
-const morgan = require('morgan');
 const http = require('http');
 const DataLoader = require('dataloader');
 const express = require('express');
@@ -20,7 +23,6 @@ const { getMe } = require('./middlewares/authorization');
 const app = express();
 
 app.use(cors());
-app.use(morgan('dev'));
 
 const server = new ApolloServer({
   introspection: true,
@@ -79,7 +81,7 @@ connectDb(`${config.mongo.uri}/${config.mongo.dbName}`)
 
     const { port } = config.app;
     httpServer.listen({ port }, () => {
-      console.log(`Apollo Server on http://localhost:${port}/graphql`);
+      logger(`Apollo Server on http://localhost:${port}/graphql`);
     });
 });
 

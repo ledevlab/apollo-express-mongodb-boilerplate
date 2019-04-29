@@ -1,5 +1,3 @@
-require('dotenv').load({ silent: true });
-
 const config = {
   app: {
     env: process.env.NODE_ENV,
