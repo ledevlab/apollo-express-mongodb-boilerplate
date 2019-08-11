@@ -1,6 +1,17 @@
 const { gql } = require('apollo-server-express');
 
 module.exports = gql`
+  type Token {
+    token: String!
+  }
+
+  type User {
+    id: ID!
+    username: String!
+    email: String!
+    role: String
+  }
+
   extend type Query {
     users: [User!]
     user(id: ID!): User
@@ -17,16 +28,5 @@ module.exports = gql`
     signIn(login: String!, password: String!): Token!
     updateUser(username: String!): User!
     deleteUser(id: ID!): Boolean!
-  }
-
-  type Token {
-    token: String!
-  }
-
-  type User {
-    id: ID!
-    username: String!
-    email: String!
-    role: String
   }
 `;

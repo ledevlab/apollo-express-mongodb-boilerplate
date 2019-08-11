@@ -18,4 +18,4 @@ const linkSchema = gql`
   }
 `;
 
-module.exports = () => [linkSchema, userSchema];
+module.exports = [linkSchema, userSchema];

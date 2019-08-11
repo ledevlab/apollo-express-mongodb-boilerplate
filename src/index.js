@@ -7,9 +7,7 @@ const http = require('http');
 const DataLoader = require('dataloader');
 const express = require('express');
 
-const {
-  ApolloServer,
-} = require('apollo-server-express');
+const { ApolloServer } = require('apollo-server-express');
 
 const config = require('./config.js');
 
@@ -47,7 +45,7 @@ const server = new ApolloServer({
         models,
         loaders: {
           user: new DataLoader(keys =>
-            loaders.user.batchUsers(keys, models),
+            loaders.user.batchUsers(keys, models)
           ),
         },
       };
@@ -62,7 +60,7 @@ const server = new ApolloServer({
         secret: config.app.secret,
         loaders: {
           user: new DataLoader(keys =>
-            loaders.user.batchUsers(keys, models),
+            loaders.user.batchUsers(keys, models)
           ),
         },
       };
@@ -75,29 +73,11 @@ server.applyMiddleware({ app, path: '/graphql' });
 const httpServer = http.createServer(app);
 server.installSubscriptionHandlers(httpServer);
 
-connectDb(`${config.mongo.uri}/${config.mongo.dbName}`)
-  .then(async () => {
-    createUsersWithMessages();
-
+connectDb(`${config.mongo.uri}/${config.mongo.dbName}`).then(
+  async () => {
     const { port } = config.app;
     httpServer.listen({ port }, () => {
       logger(`Apollo Server on http://localhost:${port}/graphql`);
     });
-});
-
-const createUsersWithMessages = async date => {
-  await models.User.create({
-    _id: new ObjectId(1),
-    username: 'rwieruch',
-    email: 'hello@robin.com',
-    password: 'rwieruch',
-    role: 'ADMIN'
-  });
-
-  await models.User.create({
-    _id: new ObjectId(2),
-    username: 'ddavids',
-    email: 'hello@david.com',
-    password: 'ddavids'
-  });
-};
+  }
+);
