@@ -16,7 +16,7 @@
   "author": "Le dev lab.",
   "private": true,
   "devDependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.7"
